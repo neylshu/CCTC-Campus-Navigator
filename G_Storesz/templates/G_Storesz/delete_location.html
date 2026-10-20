@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTC Campus Navigator | Delete Location</title>
+    <link rel="icon" type="image/jpeg" href="{% static 'G_Storesz/images/cctc_logo.jpg' %}">
+    <style>
+        :root { --ink:#10253b; --muted:#607487; --paper:#f2f8fc; --surface:#fff; --line:#d4e4ef; --green:#126b96; --danger:#b54832; }
+        * { box-sizing:border-box; }
+        body { margin:0; color:var(--ink); background:var(--paper); font-family:'Segoe UI',sans-serif; }
+        .shell { width:min(760px,calc(100% - 40px)); margin:auto; }
+        .topbar { display:flex; justify-content:space-between; align-items:center; padding:24px 0 48px; }
+        .brand { display:flex; align-items:center; gap:9px; color:var(--ink); font-size:18px; font-weight:700; text-decoration:none; }
+        .brand-logo { width:40px; height:40px; object-fit:cover; background:#fff; border:1px solid var(--line); border-radius:50%; box-shadow:0 4px 12px rgba(20,86,121,.16); }
+        .back { color:var(--green); font-size:14px; font-weight:700; text-decoration:none; }
+        h1 { margin:0 0 10px; font-size:clamp(32px,5vw,50px); line-height:1; }
+        .intro { margin:0 0 28px; color:var(--muted); line-height:1.6; }
+        .card { padding:28px; background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:0 18px 45px rgba(20,86,121,.1); }
+        .summary { margin:0 0 22px; padding:16px; background:var(--paper); border:1px solid var(--line); border-radius:10px; }
+        .summary p { margin:0 0 6px; }
+        .summary p:last-child { margin-bottom:0; }
+        .label { color:var(--muted); font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+        .value { font-weight:700; }
+        .warning { margin:0 0 22px; padding:13px 15px; color:var(--danger); background:#fdf1ee; border:1px solid #f0cfc6; border-radius:8px; font-size:14px; line-height:1.5; }
+        .actions { display:flex; align-items:center; gap:18px; }
+        button { padding:12px 18px; color:#fff; background:var(--danger); border:0; border-radius:8px; cursor:pointer; font-weight:700; }
+        .cancel { color:var(--muted); font-size:14px; text-decoration:none; }
+        @media (max-width:560px) { .shell { width:min(100% - 28px,560px); } .card { padding:20px; } }
+    </style>
+</head>
+<body>
+    <main class="shell">
+        <header class="topbar"><a class="brand" href="{% url 'index' %}"><img class="brand-logo" src="{% static 'G_Storesz/images/cctc_logo.jpg' %}" alt="Consolatrix College of Toledo City, Inc. seal">CCTC Campus Navigator</a><a class="back" href="{% url 'index' %}">View locations &rarr;</a></header>
+        <h1>Delete this location?</h1>
+        <p class="intro">The record will be removed from the campus map. This cannot be undone.</p>
+        <section class="card">
+            <div class="summary">
+                <p><span class="label">Location</span><br><span class="value">{{ location.location_name }}</span></p>
+                <p><span class="label">Category</span><br><span class="value">{{ location.category }}</span></p>
+                <p><span class="label">Building / floor</span><br><span class="value">{{ location.building_floor }}</span></p>
+                <p><span class="label">Map position</span><br><span class="value">{{ location.x_coordinate }}, {{ location.y_coordinate }}</span></p>
+            </div>
+            <p class="warning">Deleting removes this pin and its details for everyone using the navigator.</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="actions"><button type="submit">Yes, delete location</button><a class="cancel" href="{% url 'index' %}">Cancel</a></div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
